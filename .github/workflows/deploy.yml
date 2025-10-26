@@ -22,18 +22,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Setup Node.js and automatically configure pnpm
-      - name: Setup Node.js and pnpm
+      # 1. Setup Node.js first
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
-          # Using 'pnpm' here ensures the setup action automatically installs pnpm 
-          # and configures the cache correctly, solving the previous PATH issue.
           cache: "pnpm" 
 
-      # Install project dependencies using pnpm
+      # 2. ✅ Explicitly install pnpm globally now that Node and npm are ready
+      - name: Install pnpm globally
+        # We use npm to install pnpm
+        run: npm install -g pnpm
+
+      # 3. Install project dependencies
       - name: Install dependencies
-        # This step uses pnpm install, which is required by the project's package.json
+        # pnpm is now correctly in the PATH
         run: pnpm install
 
       # Build your site with Vite
