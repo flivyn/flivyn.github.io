@@ -27,12 +27,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
-          # ✅ Use pnpm for caching. This automatically looks for pnpm-lock.yaml
+          # Using 'pnpm' here ensures the setup action automatically installs pnpm 
+          # and configures the cache correctly, solving the previous PATH issue.
           cache: "pnpm" 
 
-      # Install project dependencies
+      # Install project dependencies using pnpm
       - name: Install dependencies
-        # ✅ Now pnpm is correctly installed and in PATH
+        # This step uses pnpm install, which is required by the project's package.json
         run: pnpm install
 
       # Build your site with Vite
