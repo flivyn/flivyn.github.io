@@ -22,27 +22,24 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # Setup Node.js first
-      - name: Setup Node.js
+      # Setup Node.js and automatically configure pnpm
+      - name: Setup Node.js and pnpm
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
-          # ✅ Switched cache key to 'npm' as we are no longer using pnpm
-          cache: "npm" 
-
-      # ❌ Removed the step that installed pnpm globally
+          # ✅ Use pnpm for caching. This automatically looks for pnpm-lock.yaml
+          cache: "pnpm" 
 
       # Install project dependencies
       - name: Install dependencies
-        # ✅ Changed pnpm install to npm install
-        run: npm install
+        # ✅ Now pnpm is correctly installed and in PATH
+        run: pnpm install
 
       # Build your site with Vite
       - name: Build with Vite
         env:
           GITHUB_PAGES: true
-        # ✅ Changed pnpm build to npm run build (assuming you have a "build" script in package.json)
-        run: npm run build
+        run: pnpm build
 
       # Upload the built site
       - name: Upload artifact
