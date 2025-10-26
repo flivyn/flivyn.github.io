@@ -28,7 +28,7 @@ jobs:
         with:
           node-version: "lts/*"
           # Removed cache setting to avoid errors if package-lock.json is missing
-          # (as this project previously used pnpm).
+          # (as this project previously used pnpm). 
 
       # Install project dependencies
       - name: Install dependencies
