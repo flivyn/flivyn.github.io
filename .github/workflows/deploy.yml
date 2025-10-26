@@ -27,24 +27,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "lts/*"
-          cache: "pnpm"
+          # ✅ Switched cache key to 'npm' as we are no longer using pnpm
+          cache: "npm" 
 
-      # ✅ Install pnpm globally and add it to PATH
-      - name: Install pnpm
-        run: |
-          npm install -g pnpm
-          echo "$(npm root -g)/.bin" >> $GITHUB_PATH
-          pnpm --version  # sanity check
+      # ❌ Removed the step that installed pnpm globally
 
       # Install project dependencies
       - name: Install dependencies
-        run: pnpm install
+        # ✅ Changed pnpm install to npm install
+        run: npm install
 
       # Build your site with Vite
       - name: Build with Vite
         env:
           GITHUB_PAGES: true
-        run: pnpm build
+        # ✅ Changed pnpm build to npm run build (assuming you have a "build" script in package.json)
+        run: npm run build
 
       # Upload the built site
       - name: Upload artifact
